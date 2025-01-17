@@ -9,44 +9,37 @@ export class BotService implements OnApplicationBootstrap {
 
   constructor() {
     if (this.token) {
+      // Crea la instancia del bot solo una vez en el constructor
       this.bot = new TelegramBot(this.token, { polling: true });
     }
   }
 
   onApplicationBootstrap() {
     if (process.env.ENVIRONMENT != 'local') {
-      this.sendMessage(`${process.env.ENVIRONMENT}  on`);
+      this.sendMessage(`crons on`);
     }
 
-    if (this.token) {
-      this.bot = new TelegramBot(this.token, { polling: true });
+    if (this.bot) {
+      // Definir el comportamiento del bot en onApplicationBootstrap
       this.bot.onText(/\/echo (.+)/, (msg, match) => {
-        // 'msg' is the received Message from Telegram
-        // 'match' is the result of executing the regexp above on the text content
-        // of the message
-
         const chatId = msg.chat.id;
-        const resp = match[1]; // the captured "whatever"
-
-        // send back the matched "whatever" to the chat
+        const resp = match[1]; // El texto que el usuario quiere repetir
         this.bot.sendMessage(chatId, resp);
-        // Listen for any kind of message. There are different kinds of
-        // messages.
-        this.bot.on('message', (msg) => {
-          console.log(msg.chat.id);
-          const chatId = msg.chat.id;
-          // send a message to the chat acknowledging receipt of their message
-          this.bot.sendMessage(chatId, 'Received your message');
-        });
+      });
+
+      this.bot.on('message', (msg) => {
+        console.log(msg.chat.id);
+        const chatId = msg.chat.id;
+        this.bot.sendMessage(chatId, 'Received your message');
       });
     }
   }
 
   sendMessage(message: string) {
-    if (this.token) {
+    if (this.bot && this.chatId) {
       this.bot.sendMessage(this.chatId, message);
     } else {
-      console.log('bot token not found');
+      console.log('Bot token or chat ID not found');
     }
   }
 }
