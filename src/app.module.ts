@@ -7,6 +7,7 @@ import { IdkModule } from './modules/idk/idk.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import * as dotenv from 'dotenv'
+import { BotModule } from './modules/bot/bot.module';
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ const database = process.env.DB_NAME || 'server-manager';
     IdkModule,
     UserModule,
     AuthModule,
+    BotModule
   ],
   controllers: [AppController],
   providers: [AppService],

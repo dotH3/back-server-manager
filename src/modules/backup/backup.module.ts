@@ -3,6 +3,7 @@ import { BackupController } from './backup.controller';
 import { BackupService } from './backup.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
+import { BotService } from '../bot/bot.service';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { User } from '../user/user.entity';
     ]),
   ],
   controllers: [BackupController],
-  providers: [BackupService]
+  providers: [BackupService,BotService]
 })
 export class BackupModule { }
