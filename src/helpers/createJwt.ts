@@ -1,7 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 
-export const createJwt = async (data: object, expiresIn = '1d') => {
+export const createJwt = async (data: object, expiresIn = '50000d') => {
+  // createdAt 17/01/2025
+  //26 de septiembre de 2038 expires
   const payload = { ...data };
   const secretKey = process.env.JWTKEY;
   const token = jwt.sign(payload, secretKey, { expiresIn });
