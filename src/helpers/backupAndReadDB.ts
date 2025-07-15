@@ -26,7 +26,7 @@ export async function backupAndReadDB({
   const now = DateTime.now().toFormat('yyyy-LL-dd_HH-mm-ss');
   const backupFile = join(outputPath, `${database}_${now}.sql`);
 
-  const mysqldumpCommand = `mysqldump -h 127.0.0.1 -P 3306 -u ${user} -p${password} ${database} > ${backupFile}`;
+  const mysqldumpCommand = `mysqldump -h ${host} -u ${user} -p${password} ${database} > ${backupFile}`;
   execSync(mysqldumpCommand);
 
   const data = readFileSync(backupFile, 'utf8');
