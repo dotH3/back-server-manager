@@ -10,7 +10,7 @@ export class BotService implements OnApplicationBootstrap {
   constructor() {
     if (this.token) {
       // Crea la instancia del bot solo una vez en el constructor
-      this.bot = new TelegramBot(this.token, { polling: true });
+      this.bot = new TelegramBot(this.token);
     }
   }
 
